@@ -11,7 +11,18 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) =>
       const message =
         err.status === 0
           ? 'Network error — check your connection and try again.'
-          : `Request failed (${err.status}${err.statusText ? ` ${err.statusText}` : ''}).`;
+          : (serverMessage(err) ??
+            `Request failed (${err.status}${err.statusText ? ` ${err.statusText}` : ''}).`);
       return throwError(() => new Error(message, { cause: err }));
     }),
   );
+
+/** The API's own `{ message }` error body, when it sent one (e.g. "Invalid email or password."). */
+function serverMessage(err: HttpErrorResponse): string | null {
+  const body: unknown = err.error;
+  if (typeof body === 'object' && body !== null && 'message' in body) {
+    const { message } = body;
+    if (typeof message === 'string' && message) return message;
+  }
+  return null;
+}

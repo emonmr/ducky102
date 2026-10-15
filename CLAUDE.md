@@ -72,6 +72,7 @@
 ## Git
 - Branches: `feature/<ticket>-short-description`; never commit directly to `main`/`master`
 - Run `npm run verify` before committing
+- Repo: `emonmr/ducky102` — use the GitHub MCP for issues, PRs and Actions runs (reads are fine; ask before creating/merging/commenting)
 
 ## IMPORTANT
 - Never install, upgrade or remove npm packages without the user's explicit OK

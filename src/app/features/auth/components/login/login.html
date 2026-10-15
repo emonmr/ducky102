@@ -1,0 +1,67 @@
+<app-auth-card title="Sign in" subtitle="Welcome back to Ducky102">
+  @if (store.error(); as error) {
+    <div class="alert alert-danger d-flex align-items-center gap-2 py-2" role="alert">
+      <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  <form [formRoot]="loginForm">
+    <div class="mb-3">
+      <label for="login-email" class="form-label">Email</label>
+      <input
+        id="login-email"
+        type="email"
+        class="form-control"
+        autocomplete="email"
+        [class.is-invalid]="loginForm.email().touched() && loginForm.email().invalid()"
+        [formField]="loginForm.email"
+      />
+      @if (loginForm.email().touched() && loginForm.email().errors().length) {
+        <div class="invalid-feedback">{{ loginForm.email().errors()[0].message }}</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <div class="d-flex justify-content-between align-items-baseline">
+        <label for="login-password" class="form-label">Password</label>
+        <a class="small" routerLink="/auth/forgot-password">Forgot password?</a>
+      </div>
+      <div class="input-group has-validation">
+        <input
+          id="login-password"
+          class="form-control"
+          autocomplete="current-password"
+          [type]="showPassword() ? 'text' : 'password'"
+          [class.is-invalid]="loginForm.password().touched() && loginForm.password().invalid()"
+          [formField]="loginForm.password"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="showPassword()"
+          (click)="showPassword.set(!showPassword())"
+        >
+          <i class="bi" [class]="showPassword() ? 'bi-eye-slash' : 'bi-eye'" aria-hidden="true"></i>
+        </button>
+        @if (loginForm.password().touched() && loginForm.password().errors().length) {
+          <div class="invalid-feedback">{{ loginForm.password().errors()[0].message }}</div>
+        }
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" [disabled]="store.loading()">
+      @if (store.loading()) {
+        <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+        Signing in…
+      } @else {
+        Sign in
+      }
+    </button>
+  </form>
+
+  <p authFooter class="mb-0">
+    Don't have an account? <a routerLink="/auth/register">Create one</a>
+  </p>
+</app-auth-card>
