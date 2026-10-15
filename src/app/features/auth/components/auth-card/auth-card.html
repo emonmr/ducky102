@@ -1,0 +1,23 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-lightning-charge-fill text-primary fs-1" aria-hidden="true"></i>
+        <h1 class="h3 mt-2 mb-1">{{ title() }}</h1>
+        @if (subtitle()) {
+          <p class="text-body-secondary mb-0">{{ subtitle() }}</p>
+        }
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <ng-content />
+        </div>
+      </div>
+
+      <div class="text-center small text-body-secondary mt-3">
+        <ng-content select="[authFooter]" />
+      </div>
+    </div>
+  </div>
+</div>
