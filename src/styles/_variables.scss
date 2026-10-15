@@ -1,0 +1,24 @@
+// Bootstrap token overrides. Variables only — this file must never emit CSS.
+// Loaded before Bootstrap in styles.scss and before Bootstrap's variables in _bootstrap-abstracts.scss.
+
+$primary: #0d6efd;
+$secondary: #6c757d;
+$font-family-base:
+  'Inter',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$border-radius: 0.5rem;
+$border-radius-lg: 0.75rem;
+
+// Grid customization
+$grid-gutter-width: 1.5rem;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px,
+  xxl: 1400px,
+);

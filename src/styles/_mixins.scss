@@ -1,0 +1,20 @@
+// Project mixins. Safe to import from component styles (emits no CSS on its own).
+@import 'bootstrap-abstracts';
+
+// Makes an element look and behave clickable.
+@mixin clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+// Lifts a card slightly on hover.
+@mixin hover-lift {
+  transition:
+    transform 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $box-shadow;
+  }
+}

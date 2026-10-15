@@ -1,0 +1,9 @@
+// Global stylesheet — the ONLY place full Bootstrap CSS is emitted.
+// Overrides go in _variables.scss; never import 'bootstrap/scss/bootstrap' anywhere else.
+@import 'variables';
+@import 'bootstrap/scss/bootstrap';
+
+// App-wide additions (keep this small — prefer Bootstrap utility classes in templates).
+body {
+  min-height: 100dvh;
+}

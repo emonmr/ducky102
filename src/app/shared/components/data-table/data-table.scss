@@ -1,0 +1,5 @@
+@import 'mixins';
+
+.data-row {
+  @include clickable;
+}

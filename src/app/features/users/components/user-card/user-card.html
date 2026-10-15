@@ -1,0 +1,41 @@
+<div
+  class="card h-100 user-card"
+  [class.border-primary]="selected()"
+  [class.shadow-sm]="selected()"
+>
+  <div class="card-body">
+    <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+      <div class="min-w-0">
+        <h3 class="h6 card-title mb-0 text-truncate">{{ user().name }}</h3>
+        <small class="text-body-secondary">&#64;{{ user().username }}</small>
+      </div>
+      <span class="badge" [class]="user().isActive ? 'text-bg-success' : 'text-bg-secondary'">
+        {{ user().isActive ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+    <ul class="list-unstyled small mb-0">
+      <li class="text-truncate">
+        <i class="bi bi-envelope me-2" aria-hidden="true"></i>{{ user().email }}
+      </li>
+      <li class="text-truncate">
+        <i class="bi bi-building me-2" aria-hidden="true"></i>{{ user().company }}
+      </li>
+      <li class="text-truncate">
+        <i class="bi bi-geo-alt me-2" aria-hidden="true"></i>{{ user().city }}
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer bg-transparent d-flex gap-2">
+    <button type="button" class="btn btn-sm btn-outline-primary" (click)="view.emit(user().id)">
+      <i class="bi bi-eye me-1" aria-hidden="true"></i>View
+    </button>
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-danger ms-auto"
+      [attr.aria-label]="'Delete ' + user().name"
+      (click)="remove.emit(user().id)"
+    >
+      <i class="bi bi-trash" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

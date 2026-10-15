@@ -1,0 +1,115 @@
+<div class="container-fluid py-4">
+  <div class="row align-items-center g-3 mb-4">
+    <div class="col">
+      <h1 class="h3 mb-0">
+        Users
+        <span class="badge text-bg-primary ms-2 align-middle fs-6">{{ store.totalUsers() }}</span>
+      </h1>
+      <small class="text-body-secondary">{{ store.activeCount() }} active</small>
+    </div>
+
+    <div class="col-12 col-md-auto">
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
+        <input
+          #search
+          type="search"
+          class="form-control"
+          placeholder="Search users…"
+          aria-label="Search users"
+          [value]="store.query()"
+          (input)="store.setQuery(search.value)"
+        />
+      </div>
+    </div>
+
+    <div class="col-auto">
+      <div class="btn-group" role="group" aria-label="View mode">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          [class.active]="store.viewMode() === 'cards'"
+          [attr.aria-pressed]="store.viewMode() === 'cards'"
+          (click)="store.setViewMode('cards')"
+        >
+          <i class="bi bi-grid-3x2-gap" aria-hidden="true"></i>
+          <span class="visually-hidden">Cards</span>
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          [class.active]="store.viewMode() === 'table'"
+          [attr.aria-pressed]="store.viewMode() === 'table'"
+          (click)="store.setViewMode('table')"
+        >
+          <i class="bi bi-table" aria-hidden="true"></i>
+          <span class="visually-hidden">Table</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (store.error(); as error) {
+    <div class="alert alert-danger d-flex align-items-center justify-content-between" role="alert">
+      <span>{{ error }}</span>
+      <button type="button" class="btn btn-sm btn-outline-danger" (click)="store.loadUsers()">
+        Retry
+      </button>
+    </div>
+  }
+
+  @if (store.loading()) {
+    <div class="d-flex justify-content-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading…</span>
+      </div>
+    </div>
+  } @else {
+    <div class="row g-4">
+      <div [class]="store.selectedUser() ? 'col-12 col-lg-8' : 'col-12'">
+        @if (store.viewMode() === 'cards') {
+          <div class="row g-3">
+            @for (user of store.filteredUsers(); track user.id) {
+              <div class="col-12 col-md-6" [class.col-xl-4]="!store.selectedUser()">
+                <app-user-card
+                  [user]="user"
+                  [selected]="store.selectedUserId() === user.id"
+                  (view)="store.selectUser($event)"
+                  (remove)="store.deleteUser($event)"
+                />
+              </div>
+            } @empty {
+              <div class="col-12">
+                <p class="text-body-secondary text-center py-4 mb-0">No users found.</p>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="card">
+            <app-data-table
+              [columns]="columns"
+              [data]="rows()"
+              [selectedId]="store.selectedUserId()"
+              (rowClick)="onRowClick($event)"
+            />
+          </div>
+        }
+      </div>
+
+      <!-- Detail panel is non-critical UI: its code is lazy-loaded the first time a user is selected. -->
+      @defer (when store.selectedUser()) {
+        @if (store.selectedUser(); as user) {
+          <div class="col-12 col-lg-4">
+            <app-user-detail [user]="user" (closed)="store.clearSelection()" />
+          </div>
+        }
+      } @loading (minimum 200ms) {
+        <div class="col-12 col-lg-4">
+          <div class="placeholder-glow">
+            <span class="placeholder col-12 rounded" style="height: 12rem"></span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

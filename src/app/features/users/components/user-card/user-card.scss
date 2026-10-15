@@ -1,0 +1,5 @@
+@import 'mixins';
+
+.user-card {
+  @include hover-lift;
+}

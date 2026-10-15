@@ -1,0 +1,51 @@
+<div class="table-responsive">
+  <table class="table table-hover align-middle mb-0">
+    <thead class="table-light">
+      <tr>
+        @for (col of columns(); track col.key) {
+          <th scope="col" [attr.aria-sort]="col.sortable ? ariaSort(col.key) : null">
+            @if (col.sortable) {
+              <button
+                type="button"
+                class="btn btn-link p-0 fw-semibold text-reset text-decoration-none"
+                (click)="toggleSort(col.key)"
+              >
+                {{ col.label }}
+                <i
+                  class="bi ms-1"
+                  aria-hidden="true"
+                  [class.bi-arrow-up]="sortKey() === col.key && sortDir() === 'asc'"
+                  [class.bi-arrow-down]="sortKey() === col.key && sortDir() === 'desc'"
+                  [class.bi-arrow-down-up]="sortKey() !== col.key"
+                ></i>
+              </button>
+            } @else {
+              {{ col.label }}
+            }
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of sortedData(); track row.id) {
+        <tr
+          class="data-row"
+          tabindex="0"
+          [class.table-active]="row.id === selectedId()"
+          (click)="rowClick.emit(row)"
+          (keydown.enter)="rowClick.emit(row)"
+        >
+          @for (col of columns(); track col.key) {
+            <td>{{ row[col.key] }}</td>
+          }
+        </tr>
+      } @empty {
+        <tr>
+          <td [attr.colspan]="columns().length" class="text-center text-body-secondary py-4">
+            No data available
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

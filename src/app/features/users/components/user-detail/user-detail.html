@@ -1,0 +1,29 @@
+<aside class="card sticky-lg-top" style="top: 5rem" aria-labelledby="user-detail-title">
+  <div class="card-header d-flex align-items-center justify-content-between">
+    <h2 id="user-detail-title" class="h6 mb-0">{{ user().name }}</h2>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close details"
+      (click)="closed.emit()"
+    ></button>
+  </div>
+  <div class="card-body">
+    <dl class="row small mb-0">
+      <dt class="col-4 text-body-secondary">Username</dt>
+      <dd class="col-8">{{ user().username }}</dd>
+      <dt class="col-4 text-body-secondary">Email</dt>
+      <dd class="col-8 text-break">
+        <a [href]="'mailto:' + user().email">{{ user().email }}</a>
+      </dd>
+      <dt class="col-4 text-body-secondary">Phone</dt>
+      <dd class="col-8">{{ user().phone }}</dd>
+      <dt class="col-4 text-body-secondary">Website</dt>
+      <dd class="col-8 text-break">{{ user().website }}</dd>
+      <dt class="col-4 text-body-secondary">Company</dt>
+      <dd class="col-8">{{ user().company }}</dd>
+      <dt class="col-4 text-body-secondary">City</dt>
+      <dd class="col-8 mb-0">{{ user().city }}</dd>
+    </dl>
+  </div>
+</aside>

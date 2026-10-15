@@ -1,0 +1,9 @@
+// Bootstrap functions, variables and mixins WITHOUT any CSS output.
+// Component .scss files import this (or _mixins.scss) to use $variables and breakpoint mixins:
+//   @import 'mixins';
+@import 'bootstrap/scss/functions';
+@import 'variables';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
