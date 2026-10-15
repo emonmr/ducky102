@@ -1,4 +1,4 @@
-     import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { CanMatchFn, Route, Router, UrlSegment, UrlTree } from '@angular/router';
 import { AuthStore } from '../state/auth.store';
 import { authGuard, guestGuard } from './auth.guards';
